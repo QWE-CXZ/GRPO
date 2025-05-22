@@ -1,0 +1,8 @@
+transformers
+peft
+datasets
+accelerate
+loguru
+deepspeed
+trl
+sentence_transformers
