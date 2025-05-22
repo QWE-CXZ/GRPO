@@ -1,0 +1,30 @@
+torchrun --nproc_per_node 1 \
+    sft.py \
+    --deepspeed "config/ds_config_zero2.json" \
+    --dataset_path_name "data/sft_data" \
+    --num_proc 4\
+    --max_train_samples 500 \
+    --optim "adamw_torch" \
+    --learning_rate 2e-5 \
+    --output_dir "./output/Qwen2.5-3B-Instruct" \
+    --per_device_train_batch_size 8 \
+    --gradient_accumulation_steps 1 \
+    --model_name_or_path "Qwen/Qwen2.5-3B-Instruct" \
+    --tokenizer_name_or_path "Qwen/Qwen2.5-3B-Instruct" \
+    --gradient_checkpointing True \
+    --num_train_epochs 4 \
+    --max_grad_norm 10 \
+    --model_max_length 1024 \
+    --lr_scheduler_type "cosine_with_min_lr" \
+    --lr_scheduler_kwargs '{"min_lr": 1e-6}' \
+    --save_steps 100 \
+    --warmup_ratio 0.05 \
+    --weight_decay 0.05 \
+    --logging_strategy "steps" \
+    --logging_steps 10 \
+    --bf16 \
+    --report_to tensorboard\
+    --cache_dir "Qwen_model_file"\
+    --rank 16 \
+    --lora_alpha 32 \
+    --lora_dropout 0.05
